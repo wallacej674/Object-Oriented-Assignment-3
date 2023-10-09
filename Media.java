@@ -26,11 +26,25 @@ class Movie implements IMedia {
   }
 
   public boolean isReallyOld() {
-    return false;
+    if (year >= 1930) {
+      return false;
+    }
+    else {
+      return true;
+    }
   }
 
   public boolean isCaptionAvailable(String language) {
-    return false;
+    /* if (language.isCaptionAvailableHelper == true) {
+      return true;
+    }
+    else {
+      return false;
+    }
+    public boolean contains() {
+      return this.captionOptions.contains(language);
+    }
+     */
   }
 
   public String format() {
@@ -95,10 +109,16 @@ class YTVideo implements IMedia {
 }
 
 // lists of strings
-interface ILoString {}
+interface ILoString {
+   boolean contains(String language);
+}
 
 // an empty list of strings
-class MtLoString implements ILoString {}
+class MtLoString implements ILoString {
+  public boolean contains(String language) {
+  return false;
+  }
+}
 
 // a non-empty list of strings
 class ConsLoString implements ILoString {
@@ -108,6 +128,9 @@ class ConsLoString implements ILoString {
   ConsLoString(String first, ILoString rest) {
     this.first = first;
     this.rest = rest;
+  }
+  public boolean contains(String language) {
+    return false;
   }
 }
 

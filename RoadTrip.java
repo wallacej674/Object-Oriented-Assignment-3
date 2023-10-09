@@ -8,7 +8,6 @@ public class RoadTrip {
     this.driver2 = driver2;
     this.directions = directions;
   }
-
 }
 
 class Direction {
