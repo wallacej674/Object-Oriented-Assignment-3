@@ -1,4 +1,4 @@
-import tester.*;
+//import tester.*;
 public class RoadTrip {
   String driver1;
   String driver2;
