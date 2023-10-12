@@ -26,29 +26,13 @@ class Movie implements IMedia {
   }
 
   public boolean isReallyOld() {
-    if (year >= 1930) {
-      return false;
-    }
-    else {
-      return true;
-    }
+    return year < 1930;
   }
-
   public boolean isCaptionAvailable(String language) {
-    /* if (language.isCaptionAvailableHelper == true) {
-      return true;
-    }
-    else {
-      return false;
-    }
-    public boolean contains() {
-      return this.captionOptions.contains(language);
-    }
-     */
+    return this.captionOptions.contains(language);
   }
-
   public String format() {
-    return "";
+    return this.title + "(" + this.year + ")";
   }
 }
 
@@ -74,11 +58,11 @@ class TVEpisode implements IMedia {
   }
 
   public boolean isCaptionAvailable(String language) {
-    return false;
+    return this.captionOptions.contains(language);
   }
 
   public String format() {
-    return "";
+    return this.showName + this.seasonNumber + "." + this.episodeOfSeason + "-" + this.title;
   }
 }
 
@@ -99,11 +83,11 @@ class YTVideo implements IMedia {
   }
 
   public boolean isCaptionAvailable(String language) {
-    return false;
+    return this.captionOptions.contains(language);
   }
 
   public String format() {
-    return "";
+    return this.title + "by" + this.channelName;
   }
 
 }
