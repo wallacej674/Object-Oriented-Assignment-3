@@ -12,24 +12,33 @@ interface IMedia {
   // a string showing the proper display of the media
   String format();
 }
-
-// represents a movie
-class Movie implements IMedia {
+// represent a form of media
+abstract class AMedia implements IMedia {
   String title;
-  int year;
-  ILoString captionOptions; // available captions
-
-  Movie(String title, int year, ILoString captionOptions) {
+  ILoString captionOptions;
+  AMedia(String title, ILoString captionOptions) {
     this.title = title;
-    this.year = year;
     this.captionOptions = captionOptions;
   }
-
-  public boolean isReallyOld() {
-    return year < 1930;
-  }
+  // determine whether a piece of media qualifies as old
+  public abstract boolean isReallyOld();
+  // determine if the caption options of the given form of media contains the given language
   public boolean isCaptionAvailable(String language) {
     return this.captionOptions.contains(language);
+  }
+  // write the details of a piece of media in a specified format
+  public abstract String format();
+}
+
+// represents a movie
+class Movie extends AMedia {
+  int year;
+  Movie(String title, int year, ILoString captionOptions) {
+    super(title, captionOptions);
+    this.year = year;
+  }
+  public boolean isReallyOld() {
+    return year < 1930;
   }
   public String format() {
     return this.title + "(" + this.year + ")";
@@ -37,29 +46,22 @@ class Movie implements IMedia {
 }
 
 // represents a TV episode
-class TVEpisode implements IMedia {
-  String title;
+class TVEpisode extends AMedia {
   String showName;
   int seasonNumber;
   int episodeOfSeason;
-  ILoString captionOptions; // available captions
-
   TVEpisode(String title, String showName, int seasonNumber, int episodeOfSeason,
             ILoString captionOptions) {
-    this.title = title;
+    super(title, captionOptions);
     this.showName = showName;
     this.seasonNumber = seasonNumber;
     this.episodeOfSeason = episodeOfSeason;
-    this.captionOptions = captionOptions;
   }
-
+  // determine if a TVEpisode is old
   public boolean isReallyOld() {
     return false;
   }
-
-  public boolean isCaptionAvailable(String language) {
-    return this.captionOptions.contains(language);
-  }
+  // format the TVEpisodes' details into the given format.
 
   public String format() {
     return this.showName + this.seasonNumber + "." + this.episodeOfSeason + "-" + this.title;
@@ -67,29 +69,21 @@ class TVEpisode implements IMedia {
 }
 
 // represents a YouTube video
-class YTVideo implements IMedia {
-  String title;
+class YTVideo extends AMedia {
   String channelName;
-  ILoString captionOptions; // available captions
-
-  public YTVideo(String title, String channelName, ILoString captionOptions) {
-    this.title = title;
+  YTVideo(String title, String channelName, ILoString captionOptions) {
+    super(title, captionOptions);
     this.channelName = channelName;
-    this.captionOptions = captionOptions;
   }
-
+  // Determine if the YTVideo is old
   public boolean isReallyOld() {
     return false;
   }
-
-  public boolean isCaptionAvailable(String language) {
-    return this.captionOptions.contains(language);
-  }
+  // Format the YTVideos' details into the given format.
 
   public String format() {
     return this.title + "by" + this.channelName;
   }
-
 }
 
 // lists of strings
