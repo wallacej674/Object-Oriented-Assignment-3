@@ -7,7 +7,21 @@ public class RoadTrip {
     this.driver1 = driver1;
     this.driver2 = driver2;
     this.directions = directions;
+
+    public  ILoRoadTripChunk splitUpTrip(int switchMiles) {
+      return splitUpTripHelper(switchMiles,0, this.driver1, this.driver2,
+              this.directions.splitUpDirections(switchMiles, 0, this.driver1, this.driver2, directions));
+    }
+
   }
+
+
+
+
+
+
+
+
 }
 
 class Direction {
@@ -17,6 +31,20 @@ class Direction {
     this.description = description;
     this.miles = miles;
   }
+
+
+
+  public String getDescription(){
+    return description;
+  }
+
+
+  public int getMiles(){
+    return miles;
+  }
+
+
+
 }
 
 class RoadTripChunk {
@@ -27,6 +55,43 @@ class RoadTripChunk {
     direction = this.direction;
   }
 }
+
+interface ILoRoadTripChunk{
+
+
+
+}
+
+class ConsRoadTripChunk implements ILoRoadTripChunk{
+
+  RoadTripChunk first;
+
+  ILoRoadTripChunk rest;
+
+  ConsRoadTripChunk(RoadTripChunk first, ILoRoadTripChunk rest){
+
+    this.first = first;
+
+    this.rest = rest;
+  }
+
+
+
+}
+
+
+
+
+
+
+class MTRoadTripChunk implements ILoRoadTripChunk{
+
+  @Override
+  public ILoRoadTripChunk splitUpTripHelper(int switchMiles, int miles, String driver1, String driver2, ILoDirections dir) {
+    return this;
+  }
+}
+
 
 class ExamplesRoadTrip {
   RoadTrip Example = new RoadTrip ("Hazel", "Henry", new ConsLoDirections (new Direction ("Make a right at the fork", 2),
