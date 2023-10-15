@@ -8,5 +8,7 @@
     <content url="jar://$MODULE_DIR$/../../../Desktop/Intellij Workspace/Intellij jars/tester.jar!/" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="javalib" level="project" />
+    <orderEntry type="library" name="tester" level="project" />
   </component>
 </module>

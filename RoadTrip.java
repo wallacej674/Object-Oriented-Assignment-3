@@ -1,4 +1,4 @@
-//import tester.*;
+import tester.*;
 public class RoadTrip {
   String driver1;
   String driver2;
@@ -8,22 +8,10 @@ public class RoadTrip {
     this.driver2 = driver2;
     this.directions = directions;
 
-
-
-
-    public ILoRoadTripChunk splitUpTrip(int switchMiles) {
-      return this.directions.splitUpTripHelper(switchMiles, this.driver1, this.driver2, this.directions);
-    }
-
   }
-
-
-
-
-
-
-
-
+  public ILoRoadTripChunk splitUpTrip(int switchMiles) {
+    return   this.directions.splitUpTripHelper(switchMiles, this.driver1, this.driver2, this.directions);
+  }
 }
 
 class Direction {
