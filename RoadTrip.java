@@ -9,8 +9,7 @@ public class RoadTrip {
     this.directions = directions;
 
     public  ILoRoadTripChunk splitUpTrip(int switchMiles) {
-      return splitUpTripHelper(switchMiles,0, this.driver1, this.driver2,
-              this.directions.splitUpDirections(switchMiles, 0, this.driver1, this.driver2, directions));
+      return splitUpTripHelper(switchMiles,0, this.driver1, this.driver2, dir);
     }
 
   }
@@ -75,11 +74,7 @@ class ConsRoadTripChunk implements ILoRoadTripChunk{
     this.rest = rest;
   }
 
-
-
 }
-
-
 
 
 
