@@ -5,10 +5,10 @@ public interface ILoDirections {
 
    public ILoDirections splitUp(int switchMiles,int miles, String  driver, String switchDriver, ILoDirections dir);
 
-    public ILoRoadTripChunk splitUpTripHelper(int switchMiles, int miles, String driver1, String driver2, ILoDirections dir);
+    public ILoRoadTripChunk splitUpTripHelper(int switchMiles, String driver1, String driver2, ILoDirections dir);
 
 
-    public ILoDirections unusedDirects();
+    public ILoDirections unusedDirects(int switchMiles, int miles, ILoDirections dir);
 
 }
 
@@ -45,9 +45,8 @@ class ConsLoDirections implements ILoDirections {
 
 
 
-    @Override
-    public ILoRoadTripChunk splitUpTripHelper(int switchMiles, int miles, String driver1, String driver2, ILoDirections dir) {
-        return new ConsRoadTripChunk(new RoadTripChunk(driver1, splitUp(switchMiles, miles, driver1, driver2, dir)),splitUpTripHelper(switchMiles, driver1, driver2, ));
+    public ILoRoadTripChunk splitUpTripHelper(int switchMiles, String driver1, String driver2, ILoDirections dir) {
+        return new ConsRoadTripChunk(new RoadTripChunk(driver1, splitUp(switchMiles, 0, driver1, driver2, dir)),splitUpTripHelper(switchMiles, driver2, driver1,unusedDirects(switchMiles,0,dir)));
     }
 
 
@@ -62,29 +61,11 @@ class ConsLoDirections implements ILoDirections {
         }
         else{
             return new ConsLoDirections(new Direction(this.first.getDescription(), this.first.getMiles()),
-                    unusedDirects(switchMiles, x - this.first.getMiles(), driver, switchDriver, this.rest));
+                    unusedDirects(switchMiles, x - this.first.getMiles(), this.rest));
         }
     }
 
 
-
-    public ILoRoadTripChunk splitUpTripHelper(int switchMiles, String driver1, String driver2, ILoDirections dir) {
-        if(miles == switchMiles && this.first.getMiles() != 0){
-        new ConsRoadTripChunk(new RoadTripChunk(driver1, splitUpDirections(dir)), splitUpTripHelper(switchMiles, driver2, driver1, unusedDirects(switchMiles,0, dir )))
-
-
-        }
-    }
-
-    @Override
-    public ILoDirections makeChunks() {
-        if()
-    }
-
-    @Override
-    public ILoDirections unusedDirections() {
-        return null;
-    }
 }
 
 
@@ -98,23 +79,18 @@ class ConsLoDirections implements ILoDirections {
     class MtLoDirections implements ILoDirections {
 
 
-      @Override
-        public ILoDirections splitUpDirections(int switchMiles, int miles, String driver, String switchDriver, ILoDirections dir) {
-            return this;
-        }
 
-        @Override
         public ILoDirections splitUp(int switchMiles, int miles, String driver, String switchDriver, ILoDirections dir) {
             return this;
         }
 
-        @Override
-        public ILoRoadTripChunk splitUpTripHelper(int switchMiles, int miles, String driver1, String driver2, ILoDirections dir) {
+
+        public ILoRoadTripChunk splitUpTripHelper(int switchMiles, String driver1, String driver2, ILoDirections dir) {
             return new MTRoadTripChunk();
         }
 
-        @Override
-        public ILoDirections unusedDirects() {
+
+        public ILoDirections unusedDirects(int switchMiles, int miles, ILoDirections dir) {
             return this;
         }
 

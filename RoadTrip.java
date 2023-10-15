@@ -8,8 +8,10 @@ public class RoadTrip {
     this.driver2 = driver2;
     this.directions = directions;
 
+
+
     public  ILoRoadTripChunk splitUpTrip(int switchMiles) {
-      return splitUpTripHelper(switchMiles,0, this.driver1, this.driver2, dir);
+      return this.directions.splitUpTripHelper(switchMiles, this.driver1, this.driver2, this.directions);
     }
 
   }
