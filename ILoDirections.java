@@ -116,7 +116,7 @@ class ConsLoDirections implements ILoDirections {
         }
 
 
-        
+
 
 
     }

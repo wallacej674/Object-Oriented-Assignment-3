@@ -8,8 +8,17 @@ import tester.*;
 * ...driver2...
 * ...ILoDirections directions...
 *
+*Direction:
+*
+* ...description...
+* ...miles...
+*
+* 
+*
 * methods:
 *
+* // returns the trip split up into Road Trip Chunks
+* splitUpTrip(int switchMiles)
 *
 *
 * */
