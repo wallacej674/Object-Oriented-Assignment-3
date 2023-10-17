@@ -13,6 +13,7 @@ interface ITree {
   WorldImage drawCombineLeft(int leftLength, int rightLength, double leftTheta, double rightTheta, ITree otherTree);
   WorldImage drawCombineRight(int leftLength, int rightLength, double leftTheta, double rightTheta, ITree otherTree);
 
+  double getWidth();
 }
 
 class Leaf implements ITree {
@@ -44,6 +45,9 @@ class Leaf implements ITree {
   }
   public WorldImage drawCombineRight(int leftLength, int rightLength, double leftTheta, double rightTheta, ITree otherTree) {
     return null;
+  }
+  public double getWidth() {
+    return this.size;
   }
 }
 
@@ -90,6 +94,9 @@ class Stem implements ITree {
   }
   public WorldImage drawCombineRight(int leftLength, int rightLength, double leftTheta, double rightTheta, ITree otherTree) {
     return null;
+  }
+  public double getWidth() {
+    return ((int)Math.cos(theta) * length) + tree.getWidth();
   }
 }
 
@@ -178,6 +185,10 @@ class Branch implements ITree {
             (90 - rightTheta))
         ));
   }
+  public double getWidth() {
+    return (((int)Math.cos(leftTheta) * -1 * leftLength) + left.getWidth()) +
+      (((int)Math.cos(rightTheta) * rightLength) + right.getWidth());
+  }
 }
 
 class ExampleTrees {
@@ -188,7 +199,7 @@ class ExampleTrees {
   WorldImage Leaf2 = LeafExample2.draw();
   WorldImage Leaf3 = LeafExample3.draw();
   Stem StemExample1 = new Stem (50, 30.0, LeafExample1);
-  Stem StemExample2 = new Stem(50, 150.0, LeafExample1);
+  Stem StemExample2 = new Stem(50, 190.0, LeafExample1);
   WorldImage Stem1 = StemExample1.draw();
   WorldImage Stem2 = StemExample2.draw();
   Branch BranchExample1 = new Branch(50, 70, 145.0, 35.0, LeafExample1, LeafExample1);
@@ -205,37 +216,42 @@ class ExampleTrees {
   boolean testDrawTree(Tester t) {
     WorldCanvas c = new WorldCanvas(500, 500);
     WorldScene s = new WorldScene(500, 500);
-    return c.drawScene(s.placeImageXY(Combine2, 250, 250))
+    return c.drawScene(s.placeImageXY(Stem2, 250, 250))
       && c.show();
   }
-  /*
+
   boolean testImages(Tester t) {
-    return t.checkExpect(this.LeafExample1.draw(), new CircleImage(20, OutlineMode.OUTLINE, Color.BLUE));
+    return t.checkExpect(LeafExample1.draw(), new CircleImage(20, OutlineMode.SOLID, Color.BLUE));
   }
 
   boolean testImages2(Tester t) {
-    return t.checkExpect(this.StemExample1.draw(), new LineImage(new Posn(0, 20), Color.BLUE));
+    return t.checkExpect(StemExample1.draw(), Stem1);
   }
 
   boolean testImages3(Tester t) {
-    return t.checkExpect(this.BranchExample1.draw(), new BesideImage(new LineImage(new Posn(0, 20), Color.RED),
-      new LineImage(new Posn(1, 30), Color.YELLOW)));
+    return t.checkExpect(BranchExample1.draw(), Branch1);
   }
 
 
   boolean testDroop(Tester t) {
-    return t.checkExpect(this.StemExample1.isDrooping(), false);
+    return t.checkExpect(StemExample1.isDrooping(), false);
   }
 
   boolean testDroop2(Tester t) {
-    return t.checkExpect(this.BranchExample1.isDrooping(), false);
+    return t.checkExpect(BranchExample1.isDrooping(), false);
   }
   boolean testDroop3(Tester t) {
-    return t.checkExpect(this.StemExample2.isDrooping(), true);
+    return t.checkExpect(StemExample2.isDrooping(), true);
   }
   boolean testDroop4(Tester t) {
-    return t.checkExpect(this.BranchExample2.isDrooping(), true);
+    return t.checkExpect(BranchExample2.isDrooping(), true);
+  }
+  boolean testGetWidthStem(Tester t) {
+    return t.checkInexact(Stem1.getWidth(), 63.3, 1);
   }
 
-   */
+  boolean testGetWidthBranch (Tester t) {
+    return t.checkInexact(Branch1.getWidth(), 138.3, 1);
+  }
+
 }
