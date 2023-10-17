@@ -22,7 +22,7 @@ class Leaf implements ITree {
   }
   // Methods
   public WorldImage draw() {
-    return new VisiblePinholeImage(new CircleImage(this.size, OutlineMode.SOLID, this.color));
+    return (new CircleImage(this.size, OutlineMode.SOLID, this.color));
   }
   public WorldImage drawRight() {
     return null;
@@ -60,7 +60,7 @@ class Stem implements ITree {
         (new RotateImage
           (new VisiblePinholeImage
             (new LineImage
-              (new Posn(0, this.length), Color.BLUE)).movePinhole(0, -((double) this.length / 2)), (90 - this.theta)),
+              (new Posn(0, this.length), Color.BLUE)).movePinhole(0, ((double) this.length / 2)), (this.theta * 8)),
           this.tree.draw()));
   }
   public WorldImage drawRight() {
@@ -95,36 +95,38 @@ class Branch implements ITree {
     this.left = left;
     this.right = right;
   }
-
   // Methods
-  public WorldImage drawRight() {
+  public WorldImage draw() {
     return
-      (new OverlayOffsetImage
+      (new OverlayImage
         (this.drawLeft(),
-          -(Math.cos(180 - leftTheta) * leftLength) - (Math.cos(rightTheta) * rightLength),
-          0,
           this.drawRight()));
   }
   // ((Math.cos(leftTheta) * leftLength) + (Math.cos(rightTheta) * rightLength))
-  public WorldImage draw() {
+  public WorldImage drawRight() {
     return
-      new VisiblePinholeImage(
-      (new OverlayImage
-        (this.right.draw(),
-          (new RotateImage
-            (new LineImage
-              (new Posn(0, this.rightLength), Color.GREEN).movePinhole(0, -((double) this.rightLength / 2)), (90 - this.rightTheta))))))
-        .movePinhole((Math.cos(180 - this.leftTheta) * this.leftLength), -(Math.sin(this.leftTheta) * this.leftLength));
+      (new VisiblePinholeImage
+        // WRITE OVERLAY FIRST AND THEN USE ROTATE???
+       (new RotateImage
+          (new OverlayImage
+              (new LineImage
+                (new Posn(0, this.rightLength), Color.BLUE).movePinhole(0, -((double) this.rightLength / 2)),
+                this.right.draw())
+            .movePinhole(0, this.rightLength),
+            (90 - this.rightTheta))
+            ));
+        //.movePinhole((Math.cos (this.rightTheta) * this.rightLength), (Math.sin(this.rightTheta) * this.rightLength));
   }
   public WorldImage drawLeft() {
     return
-      new VisiblePinholeImage(
-      (new OverlayImage
-        (this.left.draw(),
-          (new RotateImage
-            (new LineImage
-              (new Posn(0, this.leftLength), Color.RED).movePinhole(0, ((double) this.leftLength / 2)), (this.leftTheta))))))
-        .movePinhole(-(Math.cos(180 - this.leftTheta) * this.leftLength), (Math.sin(this.leftTheta) * this.leftLength));
+      new VisiblePinholeImage
+      (new RotateImage
+        (new OverlayImage
+          (new LineImage
+              (new Posn(0, this.leftLength), Color.RED).movePinhole(0, -((double) this.leftLength / 2))
+            ,this.left.draw()).movePinhole(0, this.leftLength),
+            (90 - this.leftTheta)
+        ));
   }
 
   public boolean isDrooping() {
@@ -140,7 +142,7 @@ class ExampleTrees {
   WorldImage Stem1 = StemExample1.draw();
   WorldImage Stem2 = StemExample2.draw();
   Branch BranchExample1 = new Branch(50, 70, 145.0, 35.0, LeafExample1, LeafExample1);
-  Branch BranchExample2 = new Branch(70, 50, 120.0, 300.0, LeafExample1, LeafExample1);
+  Branch BranchExample2 = new Branch(70, 50, 120.0, 330.0, LeafExample1, LeafExample1);
   WorldImage Branch1 = BranchExample1.draw();
   WorldImage Branch2 = BranchExample2.draw();
   // WorldImage Tree1 = new BesideImage(this.LeafExample.draw(), this.StemExample.draw());
