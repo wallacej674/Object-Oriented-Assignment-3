@@ -13,12 +13,37 @@ import tester.*;
 * ...description...
 * ...miles...
 *
-* 
+* RoadTripChunk:
 *
-* methods:
+* ...String driver...
+* ...ILoDirections directions...
+*
+* ILoRoadTripChunk:
+*
+* ...first...
+* ...rest...
+*
+* two classes in interface
+*
+* ConsRoadTripChunk
+* MTLoRoadTripChunks
+*
+* methods for RoadTrip:
 *
 * // returns the trip split up into Road Trip Chunks
 * splitUpTrip(int switchMiles)
+*
+*
+*
+* methods for Direction:
+*
+* // return the int miles
+* getMiles();
+*
+* // returns the string associated with the direction
+* getDescription();
+*
+*
 *
 *
 * */

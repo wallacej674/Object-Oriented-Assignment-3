@@ -4,6 +4,55 @@ import javalib.worldimages.*;
 import javalib.funworld.*;
 import java.awt.Color;
 
+
+
+/*
+* interface ITree:
+*
+*
+* classes associated:
+*
+* Leaf:
+* ...int size...
+* ...Color color...
+* Stem:
+*
+* ...int length...
+* ...double theta...
+* ...ITree tree...
+*
+* Branch:
+*
+* ...int leftLength...
+* ...int rightLength...
+* ...double leftTheta...
+* ...double rightTheta...
+* ...ITree left...
+* ...ITree right...
+*
+*
+* methods:
+* WorldImage draw();
+* WorldImage drawRight();
+* WorldImage drawLeft();
+* boolean isDrooping();
+* WorldImage combine(int leftLength, int rightLength, double leftTheta, double rightTheta, ITree otherTree);
+* WorldImage drawCombineLeft(int leftLength, int rightLength, double leftTheta, double rightTheta, ITree otherTree);
+* WorldImage drawCombineRight(int leftLength, int rightLength, double leftTheta, double rightTheta, ITree otherTree);
+* double getWidth();
+*
+*
+*
+*
+* */
+
+
+
+
+
+
+
+
 interface ITree {
   WorldImage draw();
   WorldImage drawRight();
