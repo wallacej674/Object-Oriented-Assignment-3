@@ -1,4 +1,20 @@
 import tester.*;
+
+/*
+* fields
+*
+* RoadTrip
+* ...driver1...
+* ...driver2...
+* ...ILoDirections directions...
+*
+* methods:
+*
+*
+*
+* */
+
+
 public class RoadTrip {
   String driver1;
   String driver2;

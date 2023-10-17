@@ -1,3 +1,24 @@
+
+/*
+* fields
+*
+* ILoDirections
+* ...ConsLoDirections...
+* ...MTLoDirections...
+*
+*
+* methods:
+* // returns the directions given switchMiles and a ILoDirections
+* splitUp(int switchMiles,int miles, String  driver, String switchDriver, ILoDirections dir)
+*
+* // returns the ILoRoadTripChunks by making a recursive call to splitUp and unusedDirects and switching driver
+* splitUpTripHelper (int switchMiles, String driver1, String driver2, ILoDirections dir)
+*
+* // returns the ILoDirections that have not been used in the ILoDirections.
+* unusedDirects (int switchMiles, int miles, ILoDirections dir)
+*
+* */
+
 public interface ILoDirections {
    // public ILoRoadTripChunk splitUpTripHelper(int switchMiles,int miles, String  driver1, String driver2, ILoDirections dir);
 
@@ -93,5 +114,9 @@ class ConsLoDirections implements ILoDirections {
         public ILoDirections unusedDirects(int switchMiles, int miles, ILoDirections dir) {
             return this;
         }
+
+
+        
+
 
     }
