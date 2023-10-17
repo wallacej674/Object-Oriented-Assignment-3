@@ -52,11 +52,11 @@ class ConsLoDirections implements ILoDirections {
         int x = switchMiles - miles;
 
         if (miles == switchMiles){
-            return new ConsLoDirections(new Direction ("switch with " + switchDriver, 0),
+            return new ConsLoDirections(new Direction ("Switch with " + switchDriver, 0),
                 new  MtLoDirections());
         }
         else if (x < this.first.getMiles()){
-            return new ConsLoDirections(new Direction ("switch with " + switchDriver, x),
+            return new ConsLoDirections(new Direction ("Switch with " + switchDriver, x),
                   new MtLoDirections() );
         }
         else{
@@ -117,8 +117,6 @@ class ConsLoDirections implements ILoDirections {
         public ILoDirections unusedDirects(int switchMiles, int miles, ILoDirections dir) {
             return this;
         }
-
-
 
 
 
