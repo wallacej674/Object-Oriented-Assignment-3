@@ -43,26 +43,27 @@ class ConsLoDirections implements ILoDirections {
 
     ConsLoDirections(Direction first, ILoDirections rest) {
 
-        first = this.first;
+        this.first = first;
 
-        rest = this.rest;
+        this.rest = rest;
     }
 
     public ILoDirections splitUp(int switchMiles, int miles, String driver, String switchDriver, ILoDirections dir) {
         int x = switchMiles - miles;
 
-        if (miles == switchMiles){
+        if (miles >= switchMiles){
             return new ConsLoDirections(new Direction ("Switch with " + switchDriver, 0),
                 new  MtLoDirections());
         }
         else if (x < this.first.getMiles()){
             return new ConsLoDirections(new Direction ("Switch with " + switchDriver, x),
-                  new MtLoDirections() );
+                  new MtLoDirections());
         }
-        else{
+        else {
             return new ConsLoDirections(new Direction(this.first.getDescription(), this.first.getMiles()),
-                    splitUp(switchMiles, x - this.first.getMiles(), driver, switchDriver, this.rest));
+                    splitUp(switchMiles, miles + this.first.getMiles(), driver, switchDriver, this.rest));
         }
+
     }
 
 
@@ -70,22 +71,26 @@ class ConsLoDirections implements ILoDirections {
 
 
     public ILoRoadTripChunk splitUpTripHelper(int switchMiles, String driver1, String driver2, ILoDirections dir) {
+        if (dir instanceof MtLoDirections) {
+            return new MTRoadTripChunk();
+        }
+        else{
         return new ConsRoadTripChunk(new RoadTripChunk(driver1, splitUp(switchMiles, 0, driver1, driver2, dir)),splitUpTripHelper(switchMiles, driver2, driver1,unusedDirects(switchMiles,0,dir)));
+    }
     }
 
 
     public ILoDirections unusedDirects(int switchMiles, int miles, ILoDirections dir) {
         int x = switchMiles - miles;
 
-        if (miles == switchMiles){
+        if (x == 0){
             return dir;
         }
         else if (x < this.first.getMiles()){
             return new ConsLoDirections(new Direction(this.first.getDescription(),this.first.getMiles() - x), this.rest);
         }
         else{
-            return new ConsLoDirections(new Direction(this.first.getDescription(), this.first.getMiles()),
-                    unusedDirects(switchMiles, x - this.first.getMiles(), this.rest));
+            return  unusedDirects(switchMiles, miles + this.first.getMiles(), this.rest);
         }
     }
 
@@ -105,7 +110,7 @@ class ConsLoDirections implements ILoDirections {
 
 
         public ILoDirections splitUp(int switchMiles, int miles, String driver, String switchDriver, ILoDirections dir) {
-            return this;
+            return new MtLoDirections();
         }
 
 
@@ -115,8 +120,9 @@ class ConsLoDirections implements ILoDirections {
 
 
         public ILoDirections unusedDirects(int switchMiles, int miles, ILoDirections dir) {
-            return this;
+            return new MtLoDirections();
         }
+
 
 
 

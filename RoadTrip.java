@@ -91,8 +91,8 @@ class RoadTripChunk {
   String driver;
   ILoDirections direction;
   RoadTripChunk(String driver, ILoDirections direction){
-    driver = this.driver;
-    direction = this.direction;
+    this.driver = driver;
+    this.direction = direction;
   }
 }
 
@@ -142,8 +142,7 @@ class ExamplesRoadTrip {
   RoadTrip roadTripToStopAndShop = new RoadTrip("Jonathan", "Chris",tripToStopAndShop);
 
 
- ILoRoadTripChunk exampleRoadTrip =  Example.splitUpTrip(15);
- ILoRoadTripChunk roadTripToStopAndShopDrivers = roadTripToStopAndShop.splitUpTrip(3);
+
  ILoRoadTripChunk exampleRoadTripAns = new ConsRoadTripChunk(new RoadTripChunk("Hazel",new ConsLoDirections(new Direction("Make a left at Alberquerque",13),
         new ConsLoDirections(new Direction("Make a right at the fork",2),new ConsLoDirections(new Direction("Switch with Henry",0),new MtLoDirections())))),
             new ConsRoadTripChunk(new RoadTripChunk("Henry",new ConsLoDirections(new Direction("Make a left at the next fork",3),new ConsLoDirections(new Direction("Switch with Hazel",12), new MtLoDirections()))),
@@ -157,8 +156,12 @@ class ExamplesRoadTrip {
                                  new ConsRoadTripChunk(new RoadTripChunk("Jonathan", new ConsLoDirections(new Direction("Your destination will be on the right",1),new MtLoDirections())), new MTRoadTripChunk())))));
 
 
-
-
+  boolean testRoadTripExample (Tester t) {
+    return t.checkExpect(this.Example.splitUpTrip(15), exampleRoadTripAns);
+  }
+  boolean testRoadTripToStopAndShop (Tester t) {
+    return t.checkExpect(this.roadTripToStopAndShop.splitUpTrip(3), RoadTripToStopAndShopDriversans3);
+  }
 
 
 
